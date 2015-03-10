@@ -10,6 +10,8 @@ public class SequentialGuidDemo
     private static readonly Sequencer _sequencer = new Sequencer();
     private static readonly SequencerLong _sequencerLong = new SequencerLong();
 
+    // sequencer wrapper implementing the interlocked increment, getting around limitation of static readonly variable access
+    // this is a thread safe implementation
     private class Sequencer
     {
         public int _i;

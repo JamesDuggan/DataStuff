@@ -32,17 +32,9 @@ from  (
 group by 
       [GuidType];
        
--- sequential guid distance distribution
--- reorder data set by SequentialGuid and calculate distance from inserted row number
-select distance
-     , count(1) [count] 
-from   ( 
-       select Id
-            , [SequentialGuid]
-            , abs(Id - row_number() over(order by [SequentialGuid])) distance
-       from   SequentialGuidOrigResults
-       ) t
-group  by
-       distance 
+-- output insert id and caculcated sequential guid order for graping
+select Id [InsertOrder]
+     , row_number() over(order by [SequentialGuid]) [SequentialGuidOrder]
+from   SequentialGuidOrigResults
 order  by
-       1;
+       Id;
